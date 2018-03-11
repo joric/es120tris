@@ -18,6 +18,7 @@ History:
 #include "delay.h"
 #include "Oled.h"
 #include "string.h"
+#include "tetris.h"
 
 
 INFO_SYS info_def = {"1.8",0,0,0};//版本1.8,两度转动,1级扭力//修改版本还需要disk.c中的Def_set[]数组
@@ -135,16 +136,24 @@ void Motor(u8 dir,u8 pwm)//转动方向
 void TorqueLv_Set(void)
 {
     if(gTimer[1] > 0) {
-        if(Get_gKey() == KEY_V1) { //按键档位增加
+        int key = Get_gKey();
+        if(key == KEY_V1) { //按键档位增加
             info_def.torque_level++;
             if(info_def.torque_level == MAX_TORQUE) info_def.torque_level = 0;
             Set_gKey(NO_KEY);//清除按键
         }
-        Show_SetLv(info_def.torque_level);//现在当前选中档位
+        // Show_SetLv(info_def.torque_level);//现在当前选中档位
+        
+        
+        float angle = Get_Angle();        
+        int tilt = (angle<-0.169) ? -1 : ( (angle>0.169) ? 1 : 0 );        
+        
+        Show_Tetris(key, tilt);
     }
 
-    if(Get_kGap() < 50) {//有按键复位设置模式退出时间计数
-        gTimer[1] = 150;
+    
+    if(Get_kGap() < 500) {//有按键复位设置模式退出时间计数
+        gTimer[1] = 1500;
         gTimer[2] = SHOTDOWN_TIME;
     }
 
@@ -187,7 +196,7 @@ float Motor_Process(void)
     float cur_scale;
     float temp_angle;
     cur_scale = Get_Angle();   //获取当前转动角度
-    
+        
     if(!gKey_Press) {//按键弹起
         Set_Mode(IDLE_MOD);
         Clear_Screen();
@@ -243,6 +252,8 @@ float Motor_Process(void)
                 Clear_Screw();
                 Show_Screw(1);   //显示固定螺丝
             }
+            
+            // Show_Tetris(cur_scale);
         }
         if((cur_scale > -0.169 && cur_scale < 0) || (cur_scale < 0.169 && cur_scale > 0))  cur_scale = 0; //去波动
         angle += cur_scale;                          //角度计算
