@@ -49,4 +49,4 @@ References
 ----------
 
 * https://hackaday.com/2017/10/01/a-screwdriver-for-the-lazy/
-
+* [Tetris for TS100 Soldering Iron](https://github.com/joric/ts100tris)
