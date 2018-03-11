@@ -44,6 +44,8 @@ Specifications
 * Main Chip: STM32
 * Sensor:  Angular velocity sensor
 
+The only difference between ES121 and ES120 is the gearbox, 1:64 vs 1:144.
+
 
 References
 ----------
