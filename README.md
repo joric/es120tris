@@ -12,7 +12,7 @@ Download .hex file in the [releases section](https://github.com/joric/es120tris/
 
 How to play
 -----------
-Triple press to start the game, accelerometer to move, short press to drop, long press to exit.
+Triple press to start the game, accelerometer to move, short press to rotate, medium press to drop, long press to exit.
 
 
 Hardware
